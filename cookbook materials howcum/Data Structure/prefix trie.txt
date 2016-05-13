@@ -1,0 +1,77 @@
+struct data
+{
+    bool endmark;
+    data *next[26+1];
+    data()
+    {
+        endmark=false;
+        for(int i=0;i<26;i++)
+            next[i]=NULL;
+    }
+} *root;
+
+void insert(char *str, int len)
+{
+    data *cur= root;
+    for(int i=0;i<len;i++)
+    {
+        int id;
+        id= str[i]- 97;
+        if(cur->next[id]==NULL)
+            cur->next[id]=new data();
+        cur=cur->next[id];
+    }
+    cur->endmark=true;
+}
+
+bool search(char *str, int len)
+{
+    data *cur= root;
+    for(int i=0;i<len;i++)
+    {
+        int id;
+        id= str[i]- 97;
+        if(cur->next[id]==NULL)
+            return false;
+        cur=cur->next[id];
+    }
+    return cur->endmark;
+}
+
+void del(data *cur)
+{
+    for(int i=0;i<26;i++)
+    {
+        if(cur->next[i])
+            del(cur->next[i]);
+    }
+    delete(cur);
+}
+
+int main()
+{
+        //READ("in.txt");
+    //WRITE("out.txt");
+    int n;
+    scanf("%d", &n);
+    root= new data();
+    for(int i=0;i<n;i++)
+    {
+        char a[50];
+        scanf("%s", a);
+        insert(a, strlen(a));
+    }
+    int q;
+    scanf("%d", &q);
+    for(int i=1;i<=q;i++)
+    {
+        char a[50];
+        scanf("%s", a);
+        if(search(a, strlen(a)))
+            puts("found\n");
+        else
+            puts("not found\n");
+    }
+    del(root);
+    return 0;
+}
