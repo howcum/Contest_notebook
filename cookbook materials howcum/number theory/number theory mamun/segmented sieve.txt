@@ -1,0 +1,79 @@
+#define MAX 46656
+#define LMT 216
+#define LEN 4830
+#define RNG 100032
+unsigned base[MAX/64], segment[RNG/64], primes[LEN];
+
+#define sq(x) ((x)*(x))
+
+#define chkC(x,n) (x[n>>6]&(1<<((n>>1)&31)))
+#define Set(x,n) (x[n>>6]|=(1<<((n>>1)&31)))
+
+
+/* Generates all the necessary prime numbers and marks them in base[]*/
+void sieve()
+{
+    unsigned i, j, k;
+    for(i=3; i<LMT; i+=2)
+        if(!chkC(base, i))
+            for(j=i*i, k=i<<1; j<MAX; j+=k)
+                Set(base, j);
+    for(i=3, j=0; i<MAX; i+=2)
+        if(!chkC(base, i))
+            primes[j++] = i;
+}
+
+/* Returns the prime-count within range [a,b] and marks them in segment[] */
+int segmented_sieve(int a, int b)
+{
+    unsigned i, j, k, cnt = (a<=2 && 2<=b)? 1 : 0;
+    if(b<2) return 0;
+    if(a<3) a = 3;
+    if(a%2==0) a++;
+    CLR(segment);
+    for(i=0; sq(primes[i])<=b; i++)
+    {
+        j = primes[i] * ( (a+primes[i]-1) / primes[i] );
+        if(j%2==0) j += primes[i];
+        for(k=primes[i]<<1; j<=b; j+=k)
+            if(j!=primes[i])
+                Set(segment, (j-a));
+    }
+    for(int mn=0; mn <=(b-a); mn+=2){
+        if(!chkC(segment, mn))
+            cnt++;
+    }
+    return cnt;
+}
+/**************************/
+#define SIZE 1000005
+int arr[SIZE];
+ 
+///Returns number of primes between segment [a,b]
+int segmentedSieve ( int a, int b ) {
+    if ( a == 1 ) a++;
+ 
+    int sqrtn = sqrt ( b );
+ 
+    memset ( arr, 0, sizeof arr ); ///Make all index of arr 0.
+ 
+    for ( int i = 0; i < primes.size() && primes[i] <= sqrtn; i++ ) {
+        int p = primes[i];
+        int j = p * p;
+ 
+        ///If j is smaller than a, then shift it inside of segment [a,b]
+        if ( j < a ) j = ( ( a + p - 1 ) / p ) * p;
+ 
+        for ( ; j <= b; j += p ) {
+            arr[j-a] = 1; ///mark them as not prime
+        }
+    }
+ 
+    int res = 0;
+    for ( int i = a; i <= b; i++ ) {
+        ///If it is not marked, then it is a prime
+        if ( arr[i-a] == 0 ) res++;
+    }
+    return res;
+}
+

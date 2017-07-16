@@ -1,0 +1,90 @@
+///Number of Digit of factorial
+int factorialDigit ( int n ) {
+    double x = 0;
+    for ( int i = 1; i <= n; i++ ) {
+        x += log10 ( i );
+    }
+    int res = ( (int) x ) + 1;
+    return res;
+}
+
+///Digits of N! in Different Base
+int factorialDigitExtended ( int n, int base ) {
+    double x = 0;
+    for ( int i = 1; i <= n; i++ ) {
+        x += log10 ( i ) / log10(base); ///Base Conversion
+    }
+    int res = ( (int) x ) + 1;
+    return res;
+}
+
+///Prime Factorization of Factorial
+void factFactorize ( int n ) {
+    for ( int i = 0; i < primes.size() && primes[i] <= n; i++ ) {
+        int x = n;
+        int freq = 0;
+
+        while ( x / primes[i] ) {
+            freq += x / primes[i];
+            x = x / primes[i];
+        }
+
+        printf ( "%d^%d\n", primes[i], freq );
+    }
+}
+
+///leading digits in factorial
+/// Find the first K digits of N!
+///k=first k digits
+int leadingDigitFact ( int n, int k ) {
+    double fact = 0;
+
+    ///Find log(N!)
+    for ( int i = 1; i <= n; i++ ) {
+        fact += log10 ( i );
+    }
+
+    ///Find the value of q
+    double q = fact - floor ( fact+EPS );
+
+    double B = pow ( 10, q );
+
+    ///Shift decimal point k-1 times
+    for ( int i = 0; i < k - 1; i++ ) {
+        B *= 10;
+    }
+
+    ///Don't forget to floor it
+    return floor(B+eps);
+}
+
+///last digit of factorial
+int last_digit_factorial(int N)
+{
+    int i,j,ans=1,a2=0,a5=0,a;
+
+    for (i = 1; i <= N; i++)
+    {
+        j = i;
+        //divide i by 2 and 5
+        while (j%2==0)
+        {
+              j /= 2;
+              a2++;
+        }
+        while (j%5==0)
+        {
+              j/=5;
+              a5++;
+        }
+
+        ans = (ans*(j%10))%10;
+    }
+
+    a=a2-a5;
+
+    for (i = 1; i <= a; i++)
+        ans=(ans * 2) %10;
+
+    return ans;
+}

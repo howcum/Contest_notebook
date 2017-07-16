@@ -48,30 +48,5 @@ void del(data *cur)
     delete(cur);
 }
 
-int main()
-{
-        //READ("in.txt");
-    //WRITE("out.txt");
-    int n;
-    scanf("%d", &n);
-    root= new data();
-    for(int i=0;i<n;i++)
-    {
-        char a[50];
-        scanf("%s", a);
-        insert(a, strlen(a));
-    }
-    int q;
-    scanf("%d", &q);
-    for(int i=1;i<=q;i++)
-    {
-        char a[50];
-        scanf("%s", a);
-        if(search(a, strlen(a)))
-            puts("found\n");
-        else
-            puts("not found\n");
-    }
-    del(root);
-    return 0;
-}
+/// you have to delete the root baby
+

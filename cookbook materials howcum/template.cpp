@@ -56,13 +56,17 @@ const double PI=acos(-1.0);
 #define    bitOff(N,in)      (N&(~(1<<(in))))
 #define    bitOn(N,in)       (N|(1<<(in)))
 #define    iseq(a,b)          (fabs(a-b)<EPS)
-#define    vi 	 vector < int >
-#define    vii 	 vector < vector < int > >
-#define    pii 	 pair< int, int >
 #define    ff 	 first
 #define    ss 	 second
 #define    ll	 long long
 #define    ull 	 unsigned long long
+
+
+typedef pair<int,int>pii;
+typedef vector<pii>vpii;
+typedef vector<int>vi;
+typedef vector<vi>vii;
+
 
 template< class T > inline T _abs(T n) { return ((n) < 0 ? -(n) : (n)); }
 template< class T > inline T _max(T a, T b) { return (!((a)<(b))?(a):(b)); }
@@ -85,11 +89,25 @@ struct debugger{
     }
 }dbg;
 
+//// 4 direction
+//int dx[]={-1,1,0,0};
+//int dy[]={0,0,-1,1};
+//
+//// 8 direction
+//int dx[]={-1,1,0,0,-1,-1,1,1};
+//int dy[]={0,0,-1,1,-1,1,1,-1};
+//
+//// horse
+//int dx[] = {-2,-2,2,2,-1,-1,1,1};
+//int dy[] = {1,-1,-1,1,2,-2,-2,2};
+
+
 int main() {
     #ifdef howcum
         READ("in.txt");
         //WRITE("out.txt");
     #endif // howcum
+//    ios_base::sync_with_stdio(0); cin.tie(0);
 
 
     return 0;

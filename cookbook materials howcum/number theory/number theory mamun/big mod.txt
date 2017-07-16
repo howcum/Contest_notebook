@@ -1,0 +1,23 @@
+#define mod 1000000007
+
+ll bigmod(ll B,ll E)		// B= base & E= expo or power
+{
+	if(E==0) return 1;
+	if(E%2==0)
+	{
+		ll ret=bigmod(B,E/2);
+		return ((ret%mod)*(ret%mod))%mod;
+	}
+	else return ((B%mod)*(bigmod(B,E-1)%mod))%mod;
+
+}
+///************************///
+int bigmod ( int b, int p, int m ) {
+    int res = 1 % m, x = b % m;
+    while ( p ) {
+        if ( p & 1 ) res = ( res * x ) % m;
+        x = ( x * x ) % m;
+        p >>= 1;
+    }
+    return res;
+}

@@ -1,0 +1,90 @@
+#define M 1000000
+bool marked[M];
+vector<int> primes; // we'll preload primes once at the beginning
+
+void sieve(int n)
+{
+    primes.push_back(2);
+    int i;
+    for (i = 3; i * i <= n; i += 2)
+    {
+        if (marked[i] == 0)
+        {
+            primes.push_back(i);
+            for (int j = i * i; j <= n; j += i + i)
+            {
+                marked[j] = 1;
+            }
+        }
+    }
+    while(i<=n)
+    {
+        if(marked[i]==0)primes.push_back(i);
+        i+=2;
+    }
+}
+int eulerPhi ( int n ) {
+    int res = n;
+    int sqrtn = sqrt ( n );
+    for ( int i = 0; i < primes.size() && primes[i] <= sqrtn; i++ ) {
+        if ( n % primes[i] == 0 ) {
+            while ( n % primes[i] == 0 ) {
+                n /= primes[i];
+            }
+            sqrtn = sqrt ( n );
+            res /= primes[i];
+            res *= primes[i] - 1;
+        }
+    }
+    if ( n != 1 ) {
+        res /= n;
+        res *= n - 1;
+    }
+    return res;
+}
+
+/***********optimized method****************/
+int phi (int n) // Oyler er Tochient Function
+{
+    int ret = n;
+    for (int i = 2; i * i <= n; i++)
+    {
+        if (n % i == 0)
+        {
+            while (n % i == 0)
+            {
+                n /= i;
+            }
+            ret -= ret / i;
+        }
+    }
+	
+    // this case will happen if n is a prime number
+    // in that case we won't find any prime that divides n
+    // that's less or equal to sqrt(n)
+    
+	if (n > 1) ret =ret - (ret / n);
+		return ret;
+}
+
+// ekhane 1 ta number er jonoo er cheye choto ba soman kon sonkha er co-prime ta ber kore
+// like gcd(9,1)=gcd(9,2)=gcd(9,4)=gcd(9,5)=gcd(9,7)=gcd(9,8)=1 ekhane 9 er jonno 6 ta number er co-prime
+// so, phi(9)=6
+
+
+/*********another if this method needs to be called several times*****/
+#define M 1000005
+int phi[M];
+
+void calculatePhi() {
+  for (int i = 1; i < M; i++) {
+    phi[i] = i;
+  }
+  for (int p = 2; p < M; p++) {
+    if (phi[p] == p) { // p is a prime
+      for (int k = p; k < M; k += p) {
+        phi[k] -= phi[k] / p;
+      }
+    }
+  }
+}

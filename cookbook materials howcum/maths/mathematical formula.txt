@@ -1,5 +1,12 @@
 Misc Geometric Formula::
 
+Area of Parallelogram from vertices:
+int abx= bx-ax;
+        int aby=by-ay;
+        int acx= cx-ax;
+        int acy=cy-ay;
+        int area =abs(abx*acy - aby*acx);
+
 Triangle ==>>
 Circum Radius = a*b*c/(4*area)
 In Radius = area/s, where s = (a+b+c)/2
